@@ -61,10 +61,13 @@ for sysname in systems_order:
         hexcol = '#%06x' % style['color']
         n_tris = tri_by_group.get(g, 0)
         legend_html += (
+            '<div class="organ-row">'
             '<label><input type="checkbox" class="organ-toggle" data-organ="%s" checked>'
             '<span class="sw" style="background:%s"></span>%s '
             '<span class="n">%s tri</span></label>'
-        ) % (g, hexcol, g, format(n_tris, ','))
+            '<input type="range" class="organ-opacity" data-organ="%s" min="0" max="100" value="%d" title="opacity">'
+            '</div>'
+        ) % (g, hexcol, g, format(n_tris, ','), g, round(style['opacity'] * 100))
     legend_html += '</div>'
 
 organ_style_json = json.dumps({g: {'color': v['color'], 'opacity': v['opacity']} for g, v in ORGAN_STYLE.items()})
@@ -113,6 +116,8 @@ header .src { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mu
 #hud input { accent-color: var(--accent); cursor: pointer; }
 #hud .sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 #hud .n { margin-left: auto; color: var(--text-muted); font-size: 0.62rem; }
+.organ-row { margin-bottom: 0.2rem; }
+.organ-opacity { width: 100%; height: 10px; margin: 0.02rem 0 0.2rem; }
 #hud .divider { height: 1px; background: var(--border); margin: 0.55rem 0; }
 #hud .note { color: var(--text-muted); font-size: 0.64rem; line-height: 1.55; }
 #hint { position: fixed; bottom: 1rem; right: 1rem; z-index: 10; font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); text-align: right; line-height: 1.6; }
@@ -149,7 +154,7 @@ header .src { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mu
   portal-vein cohort.</div>
 </div>
 <div id="hint">drag &mdash; <kbd>rotate</kbd><br>scroll &mdash; <kbd>zoom</kbd></div>
-<div id="footer">MIT License &mdash; questions to Dr Harvey Ho, <a id="contact-email" href="#">(loading contact)</a></div>
+<div id="footer">MIT License &mdash; questions to <a id="contact-email" href="#">Dr Harvey Ho</a></div>
 
 <script>
 window.GEO_B64 = "''' + geo_b64 + r'''";
@@ -161,11 +166,11 @@ window.ORGAN_STYLE = ''' + organ_style_json + r''';
 <script>
 (function () {
   "use strict";
-  // built at runtime, not present as a literal string in the page source
+  // built at runtime, not present as a literal string in the page source;
+  // link text stays "Dr Harvey Ho" -- the address itself is never displayed
   var eu = ["harvey", ".nz"].join(""), ed = ["gmail", ".com"].join("");
   var contactEl = document.getElementById("contact-email");
   contactEl.href = "mailto:" + eu + "@" + ed;
-  contactEl.textContent = eu + "@" + ed;
 
   var root = document.documentElement;
   document.getElementById("theme-toggle").addEventListener("click", function () {
@@ -275,6 +280,21 @@ window.ORGAN_STYLE = ''' + organ_style_json + r''';
     cb.addEventListener("change", function () {
       var m = meshesByOrgan[cb.dataset.organ];
       if (m) m.visible = cb.checked;
+    });
+  });
+  document.querySelectorAll(".organ-opacity").forEach(function (sl) {
+    sl.addEventListener("input", function () {
+      var m = meshesByOrgan[sl.dataset.organ];
+      if (!m) return;
+      var op = sl.value / 100;
+      m.material.opacity = op;
+      var isTransparent = op < 1.0;
+      if (m.material.transparent !== isTransparent) {
+        m.material.transparent = isTransparent;
+        m.material.depthWrite = !isTransparent;
+        m.material.needsUpdate = true;
+      }
+      m.renderOrder = isTransparent ? 1 : 0;
     });
   });
   document.getElementById("show-all").addEventListener("click", function () {
