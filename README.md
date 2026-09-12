@@ -98,7 +98,10 @@ anatomical structures in 2018-2019. No patient identifiers are present in any fi
 
 ## Contact
 
-Questions about this atlas: Dr Harvey Ho, `harvey.nz [at] gmail.com`.
+Questions about this atlas: [Dr Harvey Ho](mailto:harvey.nz@gmail.com). (The live
+viewer's own contact link never displays the address as text and builds it at
+runtime; a plain-markdown mailto link like this one can't fully replicate that,
+since GitHub renders no JavaScript here.)
 
 ## License
 
