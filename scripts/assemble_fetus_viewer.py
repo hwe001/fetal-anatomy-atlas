@@ -147,11 +147,6 @@ header .src { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mu
     <button id="hide-all">Hide all</button>
   </div>
   ''' + legend_html + r'''
-  <div class="divider"></div>
-  <div class="note">Parsed directly from the original legacy three.js JSON export (bitmask face format) into
-  per-part STL + one combined position/normal binary - no color or scale baked in, so liver/portal/aorta/uv
-  can be pulled out individually for future CCO growth or flow-network work, same pipeline as the donor
-  portal-vein cohort.</div>
 </div>
 <div id="hint">drag &mdash; <kbd>rotate</kbd><br>scroll &mdash; <kbd>zoom</kbd></div>
 <div id="footer">MIT License &mdash; questions to <a id="contact-email" href="#">Dr Harvey Ho</a></div>
