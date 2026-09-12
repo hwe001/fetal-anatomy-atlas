@@ -1,9 +1,8 @@
-# Fetal anatomy atlas — rebuilt viewer
+# Fetal Anatomy Atlas
 
-A from-scratch rebuild of [hwe001.github.io/fetus](https://hwe001.github.io/fetus/) (a single
-fetus, ~23 segmented anatomical structures, exported from OpenCMISS-Zinc/LibZinc, frozen
-since 2019) as a self-contained three.js viewer, with the geometry kept in a form that's
-directly reusable for physiological simulation work rather than only for display.
+An MR-digitized fetal anatomy atlas (a single fetus, ~23 segmented anatomical structures)
+as a self-contained three.js viewer, with the geometry kept in a form that's directly
+reusable for physiological simulation work rather than only for display.
 
 Companion repository for the manuscript "A Gestational-Age-Continuous Digital Twin of the
 Fetal Umbilical Circulation" (Harvey Ho, et al., in preparation). For the umbilical
@@ -94,9 +93,12 @@ python scripts/assemble_fetus_viewer.py \
 
 ## Provenance
 
-Source data: [hwe001.github.io/fetus](https://hwe001.github.io/fetus/), part of
-`hwe001.github.io` (public since 2019). No patient identifiers are present in any file
-here, consistent with the source repository's own long-standing public status.
+Source data: a single fetus, MR-imaged in utero and manually segmented into 23
+anatomical structures in 2018-2019. No patient identifiers are present in any file here.
+
+## Contact
+
+Questions about this atlas: Dr Harvey Ho, `harvey.nz [at] gmail.com`.
 
 ## License
 

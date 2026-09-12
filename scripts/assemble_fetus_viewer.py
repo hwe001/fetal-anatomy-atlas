@@ -70,7 +70,7 @@ for sysname in systems_order:
 organ_style_json = json.dumps({g: {'color': v['color'], 'opacity': v['opacity']} for g, v in ORGAN_STYLE.items()})
 total_tris = sum(tri_by_group.values())
 
-html = r'''<title>Fetal anatomy atlas &mdash; rebuilt viewer</title>
+html = r'''<title>Fetal Anatomy Atlas</title>
 <style>
 :root {
   --bg: #10151b; --panel: #171e26; --border: #29323d;
@@ -124,13 +124,16 @@ header .src { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mu
 }
 #theme-toggle:hover { color: var(--text); border-color: var(--accent); }
 #loading { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center; background: var(--bg); font-family: var(--mono); font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+#footer { position: fixed; left: 0; right: 0; bottom: 0.4rem; z-index: 10; text-align: center; font-family: var(--mono); font-size: 0.66rem; color: var(--text-muted); pointer-events: none; }
+#footer a { color: var(--text-muted); pointer-events: auto; }
+#footer a:hover { color: var(--accent); }
 </style>
 
 <div id="loading">rendering fetal atlas (''' + format(total_tris, ',') + r''' triangles, 23 structures)</div>
 <div id="viewport"></div>
 <header>
   <h1>Fetal anatomy atlas</h1>
-  <span class="src">rebuilt from hwe001.github.io/fetus (LibZinc export, 2019) &mdash; own three.js viewer, geometry kept simulation-ready</span>
+  <span class="src">MR-digitized fetal anatomy, 23 structures &mdash; self-contained three.js viewer, geometry kept simulation-ready</span>
 </header>
 <button id="theme-toggle" type="button" aria-label="Toggle theme">&#9680; theme</button>
 <div id="hud">
@@ -146,6 +149,7 @@ header .src { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mu
   portal-vein cohort.</div>
 </div>
 <div id="hint">drag &mdash; <kbd>rotate</kbd><br>scroll &mdash; <kbd>zoom</kbd></div>
+<div id="footer">MIT License &mdash; questions to Dr Harvey Ho, <a id="contact-email" href="#">(loading contact)</a></div>
 
 <script>
 window.GEO_B64 = "''' + geo_b64 + r'''";
@@ -157,6 +161,12 @@ window.ORGAN_STYLE = ''' + organ_style_json + r''';
 <script>
 (function () {
   "use strict";
+  // built at runtime, not present as a literal string in the page source
+  var eu = ["harvey", ".nz"].join(""), ed = ["gmail", ".com"].join("");
+  var contactEl = document.getElementById("contact-email");
+  contactEl.href = "mailto:" + eu + "@" + ed;
+  contactEl.textContent = eu + "@" + ed;
+
   var root = document.documentElement;
   document.getElementById("theme-toggle").addEventListener("click", function () {
     var cur = root.getAttribute("data-theme");
