@@ -1,3 +1,7 @@
+> **This repository has moved.** The fetal anatomy atlas, umbilical geometry, interactive viewers and the 1-D solver now live together in
+> [**hwe001/fetal-umbilical-circulation**](https://github.com/hwe001/fetal-umbilical-circulation) (folder [`atlas/`](https://github.com/hwe001/fetal-umbilical-circulation/tree/main/atlas)).
+> This repository is archived and no longer updated; the live viewers are at https://hwe001.github.io/fetal-umbilical-circulation/.
+
 # Fetal Anatomy Atlas
 
 An MR-digitized fetal anatomy atlas (a single fetus, ~23 segmented anatomical structures)
